@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Item extends Timestamped{
+public class Item extends Timestamped {
     @Id
     @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
