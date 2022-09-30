@@ -6,7 +6,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ITEM")
 @Getter
 @Setter
 @ToString
@@ -24,4 +23,14 @@ public class Item extends Timestamped {
 
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; //상품 판매 상태 SELL, SOLD_OUT
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    //    연관관계 편의 메서드
+    public void setUser(User user) {
+        this.user = user;
+        user.getItems().add(this);
+    }
 }
