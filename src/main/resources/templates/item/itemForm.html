@@ -17,15 +17,28 @@
         <input type="number" th:field="*{price}" />
         <p>재고</p>
         <input type="number" th:field="*{stockQuantity}" />
-<!--        <div th:if="${#lsits.isEmpty(itemFormDto.itemImageDtoList)}">-->
-<!--            <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">-->
-<!--                <p>상품 이미지</p>-->
-<!--                <input type="file" name="itemImageFile" />-->
-<!--            </div>-->
-<!--        </div>-->
-<!--&lt;!&ndash;        <div th:if="${#strings.isEmpty(itemFormDto.id)}">&ndash;&gt;-->
+        <div th:if="${#lists.isEmpty(itemFormDto.itemImageDtoList)}">
+            <div th:each="num: ${#numbers.sequence(1,5)}">
+                <p>상품 이미지</p>
+                <input type="file" name="itemImgFile" />
+<!--                <label th:text="상품 이미지 + ${num}"></label>-->
+            </div>
+        </div>
+        <div th:if = "${not #lists.isEmpty(itemFormDto.itemImageDtoList)}">
+            <div th:each="itemImageDto, status: ${itemFormDto.itemImageDtoList}">
+                <div>
+                    <input type="file" name="itemImgFile">
+                    <input type="hidden" name="itemImgIds" th:value="${itemImageDto.id}">
+                    <label th:text="${not #strings.isEmpty(itemImageDto.oriImgName)} ? ${itemImageDto.oriImgName} : '상품이미지' + ${status.index+1}"></label>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#strings.isEmpty(itemFormDto.id)}">
             <button th:formaction="@{/admin/item/new}" type="submit">저장</button>
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+        </div>
+        <div th:unless="${#strings.isEmpty(itemFormDto.id)}">
+            <button th:formaction="@{'/admin/item/' + ${itemFormDto.id} }" type="submit">수정</button>
+        </div>
     </form>
 </body>
 </html>
