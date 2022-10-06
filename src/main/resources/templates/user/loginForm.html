@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+</head>
+<body>
+<form action="/accounts/login" method="post">
+    <p th:for="email">이메일</p>
+    <input type="text" name="email">
+    <p th:for="password">비밀번호</p>
+    <input type="password" name="password">
+    <button type="submit">로그인</button>
+    <button type="button" onclick="location.href='/accounts/new'">회원가입</button>
+    <!--    CRSF(Cross Site Request Forgery)를 방어하기 위해 모든 POST방식의 데이터 전송에 필요-->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+</form>
+</body>
+</html>
