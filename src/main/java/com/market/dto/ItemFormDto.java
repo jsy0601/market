@@ -16,7 +16,7 @@ public class ItemFormDto {
 
     private String title;
     private int price;
-    private String stockQuantity;
+    private int stockQuantity;
     private ItemSellStatus itemSellStatus;
     private List<ItemImageDto> itemImageDtoList = new ArrayList<>();
     private List<Long> itemImgIds = new ArrayList<>();

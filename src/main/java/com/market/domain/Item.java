@@ -1,6 +1,7 @@
 package com.market.domain;
 
 import com.market.constant.ItemSellStatus;
+import com.market.dto.ItemFormDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,9 +29,10 @@ public class Item extends Timestamped {
     @JoinColumn(name = "user_id")
     private User user;
 
-    //    연관관계 편의 메서드
-    public void setUser(User user) {
-        this.user = user;
-        user.getItems().add(this);
+    public void updateItem(ItemFormDto itemFormDto) {
+        this.title = itemFormDto.getTitle();
+        this.price = itemFormDto.getPrice();
+        this.stockQuantity = itemFormDto.getStockQuantity();
+        this.itemSellStatus = itemFormDto.getItemSellStatus();
     }
 }
