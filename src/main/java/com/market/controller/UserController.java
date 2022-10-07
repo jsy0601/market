@@ -30,14 +30,14 @@ public class UserController {
     @PostMapping(value = "/new")
     public String userForm(@Valid UserFormDto userFormDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "users/userForm";
+            return "user/userForm";
         }
         try {
             User user = User.createUser(userFormDto, passwordEncoder);
             userService.saveUser(user);
         } catch (IllegalStateException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "users/userForm";
+            return "user/userForm";
         }
 
         return "redirect:/";

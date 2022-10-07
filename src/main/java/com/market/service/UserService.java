@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException(email);
         }
 
-        return User.builder()
+        return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
                 .roles(user.getRole().toString())

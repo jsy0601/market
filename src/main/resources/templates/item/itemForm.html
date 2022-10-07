@@ -5,6 +5,7 @@
     <title>상품 등록</title>
 </head>
 <body>
+<div th:replace="fragments/header::header"></div>
     <form method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
         <select th:field="*{itemSellStatus}">
             <option value="SELL">판매중</option>

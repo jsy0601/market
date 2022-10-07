@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="header">
+    <ul>
+        <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+            <a href="/admin/item/new">상품 등록</a>
+        </li>
+        <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+            <a href="/admin/items">상품 관리</a>
+        </li>
+        <li sec:authorize="isAuthenticated()">
+            <a href="/cart">장바구니</a>
+        </li>
+        <li sec:authorize="isAuthenticated()">
+            <a href="/orders">구매 이력</a>
+        </li>
+        <li sec:authorize="isAnonymous()">
+            <a href="/accounts/login">로그인</a>
+        </li>
+        <li sec:authorize="isAuthenticated()">
+            <a href="/accounts/logout">로그아웃</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

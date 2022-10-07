@@ -2,7 +2,6 @@ package com.market.domain;
 
 import com.market.constant.Role;
 import com.market.dto.UserFormDto;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
