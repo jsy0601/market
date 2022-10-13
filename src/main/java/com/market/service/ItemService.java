@@ -2,11 +2,16 @@ package com.market.service;
 
 import com.market.domain.Item;
 import com.market.domain.ItemImage;
+import com.market.domain.User;
 import com.market.dto.ItemFormDto;
 import com.market.dto.ItemImageDto;
+import com.market.dto.ItemSearchDto;
 import com.market.repository.ItemImgRepository;
 import com.market.repository.ItemRepository;
+import com.market.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,12 +31,15 @@ public class ItemService {
 
     private final ItemImgRepository itemImgRepository;
 
-    public Long saveItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+    private final UserRepository userRepository;
 
+    public Long saveItem(String email  ,ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+
+        User user = userRepository.findByEmail(email);
         //상품 등록
         Item item = itemFormDto.createItem();
+        item.setUser(user);
         itemRepository.save(item);
-
         //이미지 등록
         for (int i = 0; i < itemImgFileList.size(); i++) {
             ItemImage itemImage = new ItemImage();
@@ -74,5 +82,10 @@ public class ItemService {
         }
 
         return item.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.getAdminItemPage(itemSearchDto, pageable);
     }
 }

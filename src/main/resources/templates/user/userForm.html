@@ -17,7 +17,7 @@
     <input type="text" th:field="*{address}">
     <button type="submit">회원가입</button>
 <!--    CRSF(Cross Site Request Forgery)를 방어하기 위해 모든 POST방식의 데이터 전송에 필요-->
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 </form>
 </body>
 </html>

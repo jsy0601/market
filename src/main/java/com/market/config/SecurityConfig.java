@@ -31,6 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/accounts/logout"))
                 .logoutSuccessUrl("/");
+        http.cors().and();
+        http.csrf().disable();
     }
 
     @Bean
@@ -43,4 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService)
                 .passwordEncoder(passwordEncoder());
     }
+
+
 }

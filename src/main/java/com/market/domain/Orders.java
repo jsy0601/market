@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Order extends Timestamped{
+public class Orders extends Timestamped{
     @Id
     @GeneratedValue
     @Column(name = "order_id")
