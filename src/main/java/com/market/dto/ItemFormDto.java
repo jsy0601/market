@@ -2,6 +2,8 @@ package com.market.dto;
 
 import com.market.constant.ItemSellStatus;
 import com.market.domain.Item;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
+//@Builder
 public class ItemFormDto {
     private Long id;
 

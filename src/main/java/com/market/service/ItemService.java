@@ -10,6 +10,7 @@ import com.market.repository.ItemImgRepository;
 import com.market.repository.ItemRepository;
 import com.market.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ItemService {
 
     private final ItemRepository itemRepository;
@@ -33,6 +35,7 @@ public class ItemService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     public Long saveItem(String email  ,ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
 
         User user = userRepository.findByEmail(email);
@@ -67,12 +70,14 @@ public class ItemService {
         return itemFormDto;
     }
 
-    public Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+    public Long updateItem(String email, ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+        User user = userRepository.findByEmail(email);
+        log.info("수정중");
         //상품 수정
         Item item = itemRepository.findById(itemFormDto.getId())
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new NullPointerException("해당 아이디가 존재하지 않습니다."));
         item.updateItem(itemFormDto);
-
+        item.setUser(user);
         List<Long> itemImgIds = itemFormDto.getItemImgIds();
 
         //이미지 등록
