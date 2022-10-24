@@ -75,7 +75,7 @@ public class ItemController {
     }
 
     @PostMapping(value = "/admin/item/{itemId}")
-    public String itemUpdate(Principal principal, @PathVariable long itemId, @Valid ItemFormDto itemFormDto, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Model model) {
+    public String itemUpdate(Principal principal, @PathVariable Long itemId, @Valid ItemFormDto itemFormDto, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Model model) {
         String email = principal.getName();
         if (itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null) {
             model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");

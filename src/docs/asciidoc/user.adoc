@@ -1,0 +1,19 @@
+= Spring REST Docs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:source-highlighter:highlight.js
+
+[[resources-post]]
+== Post
+
+[[resources-post-create]]
+=== Post 생성
+
+==== HTTP request
+
+include::{snippets}/post-create/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/post-create/http-response.adoc[]

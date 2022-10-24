@@ -9,6 +9,7 @@
 <form action="/accounts/new" method="post" th:object="${userFormDto}">
     <p th:for="username">이름</p>
     <input type="text" th:field="*{username}">
+    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
     <p th:for="email">이메일</p>
     <input type="text" th:field="*{email}">
     <p th:for="password">비밀번호</p>

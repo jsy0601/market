@@ -3,17 +3,23 @@ package com.market.controller;
 import com.market.domain.User;
 import com.market.dto.UserFormDto;
 import com.market.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+@Api(tags = "User Controller")
 @RequestMapping("/accounts")
 @Controller
 @RequiredArgsConstructor
@@ -21,6 +27,8 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
+    @Operation(summary = "요약", description = "설명")
+    @ApiResponse(code = 200, message = "ok")
     @GetMapping(value = "/new")
     public String userForm(Model model) {
         model.addAttribute("userFormDto", new UserFormDto());
@@ -28,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/new")
-    public String userForm(@Valid UserFormDto userFormDto, BindingResult bindingResult, Model model) {
+    public String userForm(@Validated @RequestBody UserFormDto userFormDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "user/userForm";
         }

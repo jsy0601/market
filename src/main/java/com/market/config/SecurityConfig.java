@@ -20,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userService;
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
