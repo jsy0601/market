@@ -1,11 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>메인</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <div th:replace="fragments/header::header"></div>
-    <h1>메인 페이지</h1>
-</body>
-</html>
+<div layout:fragment="content">
+    <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
+    <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}">
+        <p th:text="${itemSearchDto.searchQuery} + '검색 결과'"></p>
+    </div>
+
+    <div class="row">
+        <th:block th:each="item, status: ${items.getContent()}">
+            <div>
+                <div>
+                    <a th:href="'/item/' +${item.id}">
+                        <img th:src="${item.imgUrl}" th:alt="${item.title}" height="400">
+                        <div>
+                            <h4>[[${item.title}]]</h4>
+                            <h3>[[${item.price}]]원</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <div th:with="start=${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})" >
+        <ul>
+
+            <li th:classappend="${items.number eq 0}?'disabled':''">
+                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}" aria-label='Previous'>
+                    <span aria-hidden='true'>Previous</span>
+                </a>
+            </li>
+
+            <li th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${items.number eq page-1}?'active':''">
+                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page-1}}" th:inline="text">[[${page}]]</a>
+            </li>
+
+            <li th:classappend="${items.number+1 ge items.totalPages}?'disabled':''">
+                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number+1}}" aria-label='Next'>
+                    <span aria-hidden='true'>Next</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+</div>

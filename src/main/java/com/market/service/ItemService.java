@@ -6,6 +6,7 @@ import com.market.domain.User;
 import com.market.dto.ItemFormDto;
 import com.market.dto.ItemImageDto;
 import com.market.dto.ItemSearchDto;
+import com.market.dto.MainItemDto;
 import com.market.repository.ItemImgRepository;
 import com.market.repository.ItemRepository;
 import com.market.repository.UserRepository;
@@ -47,10 +48,13 @@ public class ItemService {
         for (int i = 0; i < itemImgFileList.size(); i++) {
             ItemImage itemImage = new ItemImage();
             itemImage.setItem(item);
-
-            itemImgService.saveItemImg(itemImage, itemImgFileList.get(i));
+            if (i == 0) {
+                itemImage.setRepImgYn("Y");
+            } else {
+                itemImage.setRepImgYn("N");
+                itemImgService.saveItemImg(itemImage, itemImgFileList.get(i));
+            }
         }
-
         return item.getId();
     }
 
@@ -92,5 +96,10 @@ public class ItemService {
     @Transactional(readOnly = true)
     public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         return itemRepository.getAdminItemPage(itemSearchDto, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.getMainItemPage(itemSearchDto, pageable);
     }
 }

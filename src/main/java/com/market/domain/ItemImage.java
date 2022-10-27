@@ -21,6 +21,8 @@ public class ItemImage extends Timestamped {
 
     private String imgUrl; //이미지 조회 경로
 
+    private String repImgYn; // 대표 이미지;;;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;

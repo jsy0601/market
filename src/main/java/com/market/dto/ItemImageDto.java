@@ -12,6 +12,7 @@ public class ItemImageDto {
     private String imgName;
     private String oriImgName;
     private String imgUrl;
+    private String repImgYn;
 
     private static ModelMapper modelMapper = new ModelMapper();
 

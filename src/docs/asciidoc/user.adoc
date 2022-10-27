@@ -1,8 +1,7 @@
 = Spring REST Docs
 :toc: left
-:toclevels: 2
+:toclevels: 3
 :sectlinks:
-:source-highlighter:highlight.js
 
 [[resources-post]]
 == Post
