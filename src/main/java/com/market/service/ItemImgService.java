@@ -35,6 +35,7 @@ public class ItemImgService {
             imgUrl = "/images/item/" + imgName;
         }
 
+
         //상품 이미지 정보 저장
         itemImage.updateItemImg(oriImgName, imgName, imgUrl);
         itemImgRepository.save(itemImage);

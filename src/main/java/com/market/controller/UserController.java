@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 @RequestMapping("/accounts")
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -36,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/new")
-    public String userForm(@Validated @RequestBody UserFormDto userFormDto, BindingResult bindingResult, Model model) {
+    public String userForm(@Validated UserFormDto userFormDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "user/userForm";
         }

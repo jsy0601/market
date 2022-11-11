@@ -11,6 +11,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${uploadPath}")
     String uploadPath;
 
+    //로컬 컴퓨터에 업로드한 파일을 찾을 위치 설정(업로드 파일 읽어올 경로)
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")

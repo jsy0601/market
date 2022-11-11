@@ -35,4 +35,12 @@ public class Item extends Timestamped {
         this.stockQuantity = itemFormDto.getStockQuantity();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
     }
+
+    public void removeStock(int stockQuantity) {
+        int totalStock = this.stockQuantity - stockQuantity;
+        if(totalStock < 0) {
+            throw new RuntimeException("재고가 없어요");
+        }
+        this.stockQuantity = totalStock;
+    }
 }

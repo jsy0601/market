@@ -4,12 +4,12 @@
 
 <div th:replace="fragments/header::header"></div>
 <div layout:fragment="content">
-    <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
-    <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}">
-        <p th:text="${itemSearchDto.searchQuery} + '검색 결과'"></p>
-    </div>
+<!--    <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">-->
+<!--    <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}">-->
+<!--        <p th:text="${itemSearchDto.searchQuery} + '검색 결과'"></p>-->
+<!--    </div>-->
 
-    <div class="row">
+    <div>
         <th:block th:each="item, status: ${items.getContent()}">
             <div>
                 <div>
@@ -35,7 +35,8 @@
             </li>
 
             <li th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${items.number eq page-1}?'active':''">
-                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page-1}}" th:inline="text">[[${page}]]</a>
+<!--                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page-1}}" th:inline="text">[[${page}]]</a>-->
+                <a th:href="@{'/' +'?page=' + ${page-1}}" th:inline="text">[[${page}]]</a>
             </li>
 
             <li th:classappend="${items.number+1 ge items.totalPages}?'disabled':''">

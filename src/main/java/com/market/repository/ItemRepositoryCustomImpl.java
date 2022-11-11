@@ -71,7 +71,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .from(itemImage)
                 .join(itemImage.item, item)
                 .where(itemImage.repImgYn.eq("Y"))
-                .where(titleLike(itemSearchDto.getSearchQuery()))
+//                .where(titleLike(itemSearchDto.getSearchQuery()))
                 .orderBy(item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

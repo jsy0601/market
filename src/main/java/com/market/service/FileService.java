@@ -1,6 +1,7 @@
 package com.market.service;
 
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -8,11 +9,12 @@ import java.io.FileOutputStream;
 import java.util.UUID;
 
 @Service
-@Log
+@Slf4j
 public class FileService {
 
-    public String uploadFile(String uploadPath, String originalFileName, byte[] fileData) throws Exception{
-        UUID uuid = UUID.randomUUID();
+
+    public String uploadFile(String uploadPath, String originalFileName, byte[] fileData) throws Exception {
+        UUID uuid = UUID.randomUUID(); //파일명 중복 문제 해결
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String savedFileName = uuid.toString() + extension;
         String fileUploadFullUrl = uploadPath + "/" + savedFileName;
@@ -22,9 +24,9 @@ public class FileService {
         return savedFileName;
     }
 
-    public void deleteFile(String filePath) throws Exception{
+    public void deleteFile(String filePath) throws Exception {
         File deleteFile = new File(filePath);
-        if(deleteFile.exists()) {
+        if (deleteFile.exists()) {
             deleteFile.delete();
             log.info("파일을 삭제하였습니다.");
         } else {

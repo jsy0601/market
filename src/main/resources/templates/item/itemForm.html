@@ -15,10 +15,14 @@
 
         <p>상품명</p>
         <input type="text" th:field="*{title}" />
+        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
         <p>가격</p>
         <input type="number" th:field="*{price}" />
+        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
         <p>재고</p>
         <input type="number" th:field="*{stockQuantity}" />
+        <p th:if="${#fields.hasErrors('stockQuantity')}" th:errors="*{stockQuantity}"></p>
+
         <div th:if="${#lists.isEmpty(itemFormDto.itemImageDtoList)}">
             <div th:each="num: ${#numbers.sequence(1,5)}">
                 <p>상품 이미지</p>
@@ -26,6 +30,7 @@
 <!--                <label th:text="상품 이미지 + ${num}"></label>-->
             </div>
         </div>
+
         <div th:if = "${not #lists.isEmpty(itemFormDto.itemImageDtoList)}">
             <div th:each="itemImageDto, status: ${itemFormDto.itemImageDtoList}">
                 <div>
@@ -35,9 +40,11 @@
                 </div>
             </div>
         </div>
+
         <div th:if="${#strings.isEmpty(itemFormDto.id)}">
             <button th:formaction="@{/admin/item/new}" type="submit">저장</button>
         </div>
+
         <div th:unless="${#strings.isEmpty(itemFormDto.id)}">
             <button th:formaction="@{'/admin/item/' + ${itemFormDto.id}}" type="submit">수정</button>
         </div>
