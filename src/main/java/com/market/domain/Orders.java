@@ -4,6 +4,7 @@ import com.market.constant.OrderStatus;
 import com.querydsl.core.types.Order;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -55,4 +56,5 @@ public class Orders extends Timestamped{
         }
         return totalPrice;
     }
+
 }

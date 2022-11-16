@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 내역</title>
+</head>
+<body>
+<div th:replace="fragments/header::header"></div>
+<h3>주문 내역</h3>
+<div th:each="order: ${orders.getContent()}">
+    <h4 th:text="${order.orderDate}"></h4>
+    <th:block th:if="${order.orderStatus == T(com.market.constant.OrderStatus).ORDER}">
+        <button type="button" th:value="${order.orderId}">주문 취소</button>
+    </th:block>
+    <th:block th:unless="${order.orderStatus == T(com.market.constant.OrderStatus).ORDER}">
+        취소 완료
+    </th:block>
+    <div th:each="orderItem : ${order.orderItemDtoList}">
+        <img th:src="${orderItem.imgUrl}" th:alt="${orderItem.title}" width="200px"/>
+        <span th:text="${orderItem.title}"></span>
+        <span th:text="${orderItem.orderPrice} + '원'"></span>
+        <span th:text="${orderItem.count} + '개'"></span>
+    </div>
+</div>
+
+
+
+<div th:with="start=${(orders.number/maxPage)*maxPage + 1}, end=(${(orders.totalPages == 0) ? 1 : (start + (maxPage - 1) < orders.totalPages ? start + (maxPage - 1) : orders.totalPages)})">
+    <ul>
+        <li th:classappend="${orders.number eq 0} ? 'disabled' : ''">
+            <a th:href="@{'/orders/' + ${orders.number - 1}}">
+                <span>Previous</span>
+            </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${orders.number eq page-1}? 'active':''">
+            <a th:href="@{'/orders/' + ${page-1}}" th:inline="text">[[${page}]]</a>
+        </li>
+
+        <li th:classappend="${orders.number+1 ge orders.totalPages} ? 'disabled' : ''">
+            <a th:href="@{'/orders/' + ${orders.number + 1}}">
+                <span>Next</span>
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

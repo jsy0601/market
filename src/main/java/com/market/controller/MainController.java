@@ -27,7 +27,6 @@ public class MainController {
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
         System.out.println(items.getTotalPages());
-        log.info("아이템 : ", items.getContent());
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage", 5);
