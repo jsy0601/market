@@ -23,4 +23,18 @@ public class CartItem extends Timestamped{
     private Item item;
 
     private int count; //수량
+
+    public static CartItem createCartItem(Cart cart, Item item, int count) {
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+
+        return cartItem;
+    }
+
+    //장바구니에서 추가 수량 더하기
+    public void addCount(int count) {
+        this.count += count;
+    }
 }
