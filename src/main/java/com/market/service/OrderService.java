@@ -10,7 +10,6 @@ import com.market.repository.OrderRepository;
 import com.market.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -68,4 +67,12 @@ public class OrderService {
         }
         return new PageImpl<OrderInfoDto>(orderInfoDtos, pageable, totalCount);
     }
+
+    //    주문 취소
+    public void cancelOrder(Long orderId) {
+        Orders orders = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+        orders.cancelOrder();
+    }
 }
+

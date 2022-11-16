@@ -58,4 +58,10 @@ public class OrderController {
 
         return "order/orderInfo";
     }
+
+    @PostMapping("/order/{orderId}/cancel")
+    public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId, Principal principal) {
+        orderService.cancelOrder(orderId);
+        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+    }
 }

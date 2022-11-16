@@ -43,4 +43,9 @@ public class Item extends Timestamped {
         }
         this.stockQuantity = totalStock;
     }
+
+    //주문 취소 시 재고 다시 추가
+    public void addStock(int stockQuantity) {
+        this.stockQuantity += stockQuantity;
+    }
 }

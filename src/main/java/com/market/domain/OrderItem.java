@@ -39,4 +39,9 @@ public class OrderItem extends Timestamped{
     public int getTotalPrice() {
         return orderPrice * count;
     }
+
+    // 주문 취소 시 주문 수량만큼 재고 추가
+    public void cancel() {
+        this.getItem().addStock(count);
+    }
 }
