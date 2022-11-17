@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString
 public class Item extends Timestamped {
     @Id
     @Column(name = "item_id")
