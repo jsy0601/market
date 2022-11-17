@@ -4,6 +4,7 @@ import com.market.domain.Cart;
 import com.market.domain.CartItem;
 import com.market.domain.Item;
 import com.market.domain.User;
+import com.market.dto.CartDetailDto;
 import com.market.dto.CartItemDto;
 import com.market.repository.CartItemRepository;
 import com.market.repository.CartRepository;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,4 +52,33 @@ public class CartService {
             return cartItem.getId();
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<CartDetailDto> getCartList(String email) {
+        List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
+
+        User user = userRepository.findByEmail(email);
+        Optional<Cart> cart = cartRepository.findById(user.getId());
+        if (!cart.isPresent()) {
+            return cartDetailDtoList;
+        }
+        cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.get().getId());
+
+        return cartDetailDtoList;
+    }
+
+//    @Transactional(readOnly = true)
+//    public List<CartDetailDto> getCartList(String email){
+//
+//        List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
+//
+//        User user = userRepository.findByEmail(email);
+//        Cart cart = cartRepository.findByUserId(user.getId());
+//        if(cart == null){
+//            return cartDetailDtoList;
+//        }
+//
+//        cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.getId());
+//        return cartDetailDtoList;
+//    }
 }
