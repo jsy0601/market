@@ -11,6 +11,7 @@ import com.market.repository.CartRepository;
 import com.market.repository.ItemRepository;
 import com.market.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class CartService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
@@ -31,9 +33,9 @@ public class CartService {
     public Long addCart(CartItemDto cartItemDto, String email) {
         Item item = itemRepository.findById(cartItemDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
-        Optional<Cart> cart = cartRepository.findById(cartItemDto.getItemId());
-        User user = userRepository.findByEmail(email);
 
+        User user = userRepository.findByEmail(email);
+        Optional<Cart> cart = cartRepository.findByUserId(user.getId());
         //처음 장바구니에 담을 때 장바구니 엔티티 생성
         if (!cart.isPresent()) {
             cart = Optional.of(Cart.createCart(user));
@@ -58,27 +60,12 @@ public class CartService {
         List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
 
         User user = userRepository.findByEmail(email);
-        Optional<Cart> cart = cartRepository.findById(user.getId());
-        if (!cart.isPresent()) {
+        Optional<Cart> cart = cartRepository.findByUserId(user.getId());
+        if (cart.isEmpty()) {
             return cartDetailDtoList;
         }
-        cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.get().getId());
+        cartDetailDtoList =  cartItemRepository.findCartDetailDtoList(cart.get().getId());
 
         return cartDetailDtoList;
     }
-
-//    @Transactional(readOnly = true)
-//    public List<CartDetailDto> getCartList(String email){
-//
-//        List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
-//
-//        User user = userRepository.findByEmail(email);
-//        Cart cart = cartRepository.findByUserId(user.getId());
-//        if(cart == null){
-//            return cartDetailDtoList;
-//        }
-//
-//        cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.getId());
-//        return cartDetailDtoList;
-//    }
 }

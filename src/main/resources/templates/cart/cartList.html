@@ -5,6 +5,9 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <th:block layout:fragment="script">
   <script th:inline="javascript">
+    // $(document).ready(function () {
+    //   getTotalPrice();
+    // });
 
   </script>
 </th:block>
@@ -24,22 +27,20 @@
   </thead>
   <tbody>
   <tr th:each="cartItem : ${cartItems}">
-<!--    <td>-->
-<!--      <input type="checkbox" name="checkbox" th:value="${cartItem.cartItemId}">-->
-<!--    </td>-->
     <td>
-      <img th:src="${cartItem.imgUrl}" th:alt="${cartItem.title}">
+      <img th:src="${cartItem.imgUrl}" th:alt="${cartItem.title}" width="50px">
       <span th:text="${cartItem.title}"></span>
-      <span th:text="${cartItem.price} + '원'"></span>
-      <span th:text="${cartItem.count}"></span>
-<!--      <button type="button" th:data="${cartItem.cartItemId}" onclick="deleteCartItem(this)"></button>-->
+      <span id="price" th:text="${cartItem.price} + '원'"></span>
+      <span id="count" th:text="${cartItem.count}"></span>
     </td>
     <td>
-      <span th:text="${cartItem.price * cartItem.count} + '원'"></span>
+      <span th:text="${cartItem.price * cartItem.count} + '원'" th:data="${cartItem.price * cartItem.count}"></span>
+      <button type="button" th:data="${cartItem.cartItemId}">X</button>
     </td>
   </tr>
   </tbody>
 </table>
-<!--<button type="button" onclick="orders()">주문하기</button>-->
+<!--<h2>결제 예정 금액 <span id="totalPrice"></span></h2>-->
+<button type="button">주문하기</button>
 </body>
 </html>

@@ -4,6 +4,7 @@ import com.market.dto.CartDetailDto;
 import com.market.dto.CartItemDto;
 import com.market.service.CartService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class CartController {
     private final CartService cartService;
 
@@ -48,8 +50,10 @@ public class CartController {
 
     @GetMapping(value = "/cart")
     public String orderInfo(Principal principal, Model model) {
-        List<CartDetailDto> cartDetailDtoList = cartService.getCartList(principal.getName());
-        model.addAttribute("cartItems", cartDetailDtoList);
+        List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
+        model.addAttribute("cartItems", cartDetailList);
+        log.info("cartDetaliList : {}", cartDetailList);
+
         return "cart/cartList";
     }
 }
